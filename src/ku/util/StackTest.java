@@ -31,13 +31,19 @@ public class StackTest {
 	}
 	
 	@Test
-	public void testStackCapacity() {
-		assertEquals(2, stack.capacity());
+	public void testStackSize() {
+		assertEquals(2, stack.size());
+		stack.pop();
+		assertEquals(1, stack.size());
 	}
 	
 	@Test(expected=java.lang.IllegalStateException.class)
 	public void testPushOverCapacity() {
-		Assume.assumeTrue(stack.isFull());
+		stack.push(2);
+		stack.push(1);
+		stack.push(2);
+		stack.push(1);
+		stack.push(2);
 		stack.push(1);
 	}
 	
@@ -59,6 +65,7 @@ public class StackTest {
 		stack.push("Bee");
 		assertEquals("Bee", stack.peek());
 		assertEquals("Bee", stack.peek());
+		assertFalse("Ant", stack.peek().equals("Ant"));
 	}
 	
 	@Test
@@ -74,6 +81,9 @@ public class StackTest {
 		assertEquals("Bee",stack.pop());
 		stack.push("New Bee");
 		assertEquals("New Bee",stack.pop());
+		stack.pop();
+		stack.peek();
+		assertEquals(0, stack.size());
 	}
 	
 	@Test(expected=java.util.EmptyStackException.class)
